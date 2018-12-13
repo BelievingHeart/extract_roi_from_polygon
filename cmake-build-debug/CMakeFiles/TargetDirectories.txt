@@ -1,3 +1,0 @@
-/home/afterburner/CLionProjects/hello/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/afterburner/CLionProjects/hello/cmake-build-debug/CMakeFiles/main.dir
-/home/afterburner/CLionProjects/hello/cmake-build-debug/CMakeFiles/edit_cache.dir

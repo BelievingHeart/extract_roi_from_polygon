@@ -3,9 +3,9 @@
 #include "opencv2/imgproc.hpp"
 #include <fmt/printf.h>
 
-cv::Mat canvas_color, canvas_bw, src;
-std::vector<cv::Point2i> vertices;
-const char *winName = "src image";
+static cv::Mat canvas_color, canvas_bw, src;
+static std::vector<cv::Point2i> vertices;
+static const char *winName = "src image";
 
 void click_and_draw(int event, int x, int y, int flags, void *usr_data);
 cv::Mat segment(cv::Mat &&contour_image);
@@ -36,7 +36,7 @@ int main(int argc, char **argv) {
   cv::waitKey(0);
 }
 
-void draw_lines_and_show(std::vector<cv::Point2i> &vertices_, cv::Mat &canvas,
+void draw_lines_and_show(const std::vector<cv::Point2i> &vertices_, cv::Mat &canvas,
                          bool closed) {
   bool is_color = canvas.type() == CV_8UC3;
   int line_width = is_color ? 3 : 1;
@@ -66,7 +66,11 @@ void click_and_draw(int event, int x, int y, int flags, void *usr_data) {
   if (event == cv::EVENT_RBUTTONDOWN) {
     canvas_bw = cv::Mat::zeros(src.size(), CV_8UC1);
     draw_lines_and_show(vertices, canvas_bw, true);
-    fmt::print("ROI selected, press any key to continue...\n");
+    fmt::print("ROI selected:\n");
+    for (const auto &pt : vertices) {
+      fmt::print("cv::Point2i({}, {})\n", pt.x, pt.y);
+    }
+    fmt::print("Press any key to continue...\n\n");
   }
 }
 

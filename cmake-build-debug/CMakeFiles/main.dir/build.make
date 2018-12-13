@@ -60,7 +60,7 @@ include CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/main.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/main.cpp.o: ../main.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/afterburner/CLionProjects/hello/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/main.dir/main.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/main.cpp.o -c /home/afterburner/CLionProjects/hello/main.cpp
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu=/usr/local/bin/include-what-you-use --tidy="/usr/bin/clang-tidy-6.0;-checks=*" --cppcheck=/usr/bin/cppcheck --source=/home/afterburner/CLionProjects/hello/main.cpp -- /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/main.cpp.o -c /home/afterburner/CLionProjects/hello/main.cpp
 
 CMakeFiles/main.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/main.cpp.i"

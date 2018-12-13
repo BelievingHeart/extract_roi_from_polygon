@@ -1,1 +1,2 @@
-/usr/bin/c++  -Wall -Wextra -pthread -g   CMakeFiles/main.dir/main.cpp.o  -o main -Wl,-rpath,/usr/local/lib /usr/local/lib/libopencv_highgui.so.4.0.0 /usr/local/lib/libfmt.a /usr/local/lib/libopencv_videoio.so.4.0.0 /usr/local/lib/libopencv_imgcodecs.so.4.0.0 /usr/local/lib/libopencv_imgproc.so.4.0.0 /usr/local/lib/libopencv_core.so.4.0.0 
+/usr/bin/c++  -Wall -Wextra -g   -Wl,--no-as-needed CMakeFiles/main.dir/main.cpp.o  -o main -Wl,-rpath,/usr/local/lib /usr/local/lib/libopencv_highgui.so.4.0.0 /usr/local/lib/libfmt.a /usr/local/lib/libopencv_videoio.so.4.0.0 /usr/local/lib/libopencv_imgcodecs.so.4.0.0 /usr/local/lib/libopencv_imgproc.so.4.0.0 /usr/local/lib/libopencv_core.so.4.0.0 
+/snap/clion/56/bin/cmake/linux/bin/cmake -E __run_co_compile --lwyu=main

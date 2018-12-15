@@ -26,13 +26,13 @@ endif()
 find_package(OpenCV REQUIRED)
 find_package(fmt REQUIRED CONFIG)
 
-add_library(segmentation segmentation.cpp)
+add_library(segmentation STATIC segmentation.cpp)
 target_link_libraries(segmentation PRIVATE  opencv_imgproc opencv_core opencv_highgui fmt::fmt)
 
-add_library(rotation rotate.cpp)
+add_library(rotation STATIC rotate.cpp)
 target_link_libraries(rotation PRIVATE  opencv_imgproc opencv_core opencv_highgui fmt::fmt)
 
-add_library(stretch stretch.cpp)
+add_library(stretch STATIC stretch.cpp)
 target_link_libraries(stretch PRIVATE  opencv_imgproc opencv_core opencv_highgui fmt::fmt)
 
 add_executable(main main.cpp)

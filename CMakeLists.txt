@@ -25,9 +25,22 @@ endif()
 
 find_package(OpenCV REQUIRED)
 find_package(fmt REQUIRED CONFIG)
+
+add_library(segmentation segmentation.cpp)
+target_link_libraries(segmentation PRIVATE  opencv_imgproc opencv_core opencv_highgui fmt::fmt)
+
+add_library(rotation rotate.cpp)
+target_link_libraries(rotation PRIVATE  opencv_imgproc opencv_core opencv_highgui fmt::fmt)
+
+add_library(stretch stretch.cpp)
+target_link_libraries(stretch PRIVATE  opencv_imgproc opencv_core opencv_highgui fmt::fmt)
+
 add_executable(main main.cpp)
 target_include_directories(main PRIVATE ${OpenCV_INCLUDE_DIRS})
-target_link_libraries(main PRIVATE opencv_imgcodecs opencv_imgproc opencv_core opencv_highgui fmt::fmt)
+target_link_libraries(main PRIVATE
+        opencv_imgcodecs opencv_imgproc opencv_core opencv_highgui fmt::fmt
+        segmentation rotation stretch
+        )
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     target_compile_definitions(main PRIVATE DEBUG)
 endif()

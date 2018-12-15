@@ -1,9 +1,8 @@
 //
 // Created by afterburner on 18-12-15.
 //
-#include "opencv2/highgui.hpp"
-#include "opencv2/imgproc.hpp"
-#include <fmt/printf.h>
+#include <opencv2/core/mat.hpp>      // for Mat, MatSize
+#include "opencv2/imgproc.hpp"       // for approxPolyDP, boundingRect, find...
 
 cv::Mat fit_bounding_box(cv::Mat &&contour_image, cv::Mat &&src) {
   std::vector<std::vector<cv::Point2i>> contours;

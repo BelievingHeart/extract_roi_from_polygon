@@ -1,10 +1,11 @@
 //
 // Created by afterburner on 18-12-15.
 //
-#include "opencv2/highgui.hpp"
-#include "opencv2/imgproc.hpp"
-#include <cmath>
-#include <fmt/printf.h>
+#include <opencv2/core/cvdef.h>          // for CV_PI
+#include <cmath>                         // for atan2
+#include <opencv2/core.hpp>              // for mean, multiply, eigen, trans...
+#include "opencv2/highgui.hpp"           // for imshow, waitKey, destroyAllW...
+#include "opencv2/imgproc.hpp"           // for Sobel, cvtColor, getRotation...
 
 cv::Mat fix_rotation(cv::Mat &&image_segmented) {
   cv::Mat gaussian_out, image_bw;

@@ -1,10 +1,9 @@
 //
 // Created by afterburner on 18-12-15.
 //
-#include "opencv2/highgui.hpp"
-#include "opencv2/imgproc.hpp"
-#include <cmath>
-#include <fmt/printf.h>
+#include <opencv2/core/hal/interface.h>  // for CV_32FC1
+#include <opencv2/core/mat.hpp>          // for Mat, operator<, MatSize
+#include "opencv2/imgproc.hpp"           // for findContours, pointPolygonTest
 
 cv::Mat segment(const cv::Mat &contour_image, cv::Mat &&src) {
   std::vector<std::vector<cv::Point>> contours;

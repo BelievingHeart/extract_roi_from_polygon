@@ -1,9 +1,10 @@
-
-#include "opencv2/highgui.hpp"
-#include "opencv2/imgproc.hpp"
-#include <cmath>
-#include <fmt/printf.h>
-#include <iostream>
+#include <fmt/core.h>                    // for print
+#include <opencv2/core/hal/interface.h>  // for CV_8UC1, CV_8UC3
+#include <opencv2/core/mat.hpp>          // for Mat, MatSize
+#include <opencv2/core/utility.hpp>      // for CommandLineParser
+#include <opencv2/imgcodecs.hpp>         // for imread, IMREAD_COLOR
+#include "opencv2/highgui.hpp"           // for imshow, waitKey, destroyWindow
+#include "opencv2/imgproc.hpp"           // for line, circle, resize, LINE_AA
 
 static cv::Mat canvas_color, canvas_bw, src;
 static std::vector<cv::Point2i> vertices;
@@ -21,39 +22,42 @@ int main(int argc, char **argv) {
       "{@input | /home/afterburner/Downloads/lvlian/lvlian_8.jpeg | input "
       "image}"
       "{scale_factor| 0.5| image scale factor}"
-      "{rotate | true | rotation rectification }");
+      "{rotate | false | true when dealing with things like book pages }");
   if (parser.has("help")) {
     parser.printMessage();
     return 0;
   }
-  const bool retify_rotation = parser.get<bool>("rotate");
+  const auto rectify_rotation = parser.get<bool>("rotate");
   const auto image_path = parser.get<std::string>("@input");
   src = cv::imread(image_path, cv::IMREAD_COLOR);
   if (src.empty()) {
     fmt::print("Error reading image <{}>\n", image_path);
     return -1;
   }
-  const double scale_factor = parser.get<double>("scale_factor");
+  const auto scale_factor = parser.get<double>("scale_factor");
   cv::resize(src, src, {}, scale_factor, scale_factor, cv::INTER_LINEAR);
 
   // Outline contour
   cv::namedWindow(winName, cv::WINDOW_AUTOSIZE);
-  cv::setMouseCallback(winName, click_and_draw, nullptr);
+  bool closed = false;
+  cv::setMouseCallback(winName, click_and_draw, &closed);
   cv::imshow(winName, src);
   cv::waitKey(0);
   cv::destroyWindow(winName);
 
   // rotation rectification and slice sub-region
-  if (retify_rotation) {
+  if (rectify_rotation && closed) {
     auto image_segmented = segment(canvas_bw, std::move(src));
     const cv::Mat sub_region = fix_rotation(std::move(image_segmented));
     cv::imshow("Final result", sub_region);
     cv::waitKey(0);
-  } else {
+  } else if(closed) {
     const cv::Mat sub_region =
         fit_bounding_box(std::move(canvas_bw), std::move(src));
         cv::imshow("Final result", sub_region);
         cv::waitKey(0);
+  } else{
+    fmt::print("Polygon not closed, please restart program.\n");
   }
 
   return 0;
@@ -89,5 +93,7 @@ void click_and_draw(int event, int x, int y, int flags, void *usr_data) {
   if (event == cv::EVENT_RBUTTONDOWN) {
     canvas_bw = cv::Mat::zeros(src.size(), CV_8UC1);
     draw_lines_and_show(vertices, canvas_bw, true);
+    bool *closed_ptr = static_cast<bool *>(usr_data);
+    *closed_ptr = true;
   }
 }
